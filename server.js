@@ -11,7 +11,10 @@ app.use(morgan('dev'))
 app.use(cors())
 app.use(helmet())
 
+
+// Validates token being used by the token bearer and/or if it is not present 
 app.use(function validateBearerToken(req, res, next) {
+
     const apiToken = process.env.API_TOKEN
     const authToken = req.get('Authorization')
     if (!authToken || authToken.split(' ')[1] !== apiToken) {
@@ -20,6 +23,7 @@ app.use(function validateBearerToken(req, res, next) {
     next()
 })
 
+// Sets endpoints for each search parameter
 app.get('/movie', function handleGetMovie(req, res) {
     let response = MOVIES;
 
